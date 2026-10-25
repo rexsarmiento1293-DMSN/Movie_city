@@ -1,0 +1,119 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Public director profile for a Movie City Studio user (PII-free).",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Public studio director display name.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "studioRole": {
+          "type": "string",
+          "description": "Creative role title chosen by the user.",
+          "enum": ["Director", "Screenwriter", "Cinematographer", "Producer"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the profile was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the profile was last updated."
+        }
+      },
+      "required": ["uid", "displayName", "studioRole", "createdAt", "updatedAt"]
+    },
+    "StudioProject": {
+      "title": "StudioProject",
+      "description": "An AI-generated drama, video, photo, visual effect, or soundtrack project.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the creator who owns this project.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Project title.",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "description": "Studio production modality.",
+          "enum": ["drama", "video", "image", "effects", "music"]
+        },
+        "genre": {
+          "type": "string",
+          "description": "Selected genre or visual style.",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Director prompt used to generate the project.",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "scriptText": {
+          "type": "string",
+          "description": "Generated screenplay, synopsis, lyrics, or production notes.",
+          "minLength": 0,
+          "maxLength": 8000
+        },
+        "status": {
+          "type": "string",
+          "description": "Workflow state of the project.",
+          "enum": ["draft", "published", "archived"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the project was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the project was last updated."
+        }
+      },
+      "required": [
+        "ownerId",
+        "title",
+        "category",
+        "genre",
+        "prompt",
+        "scriptText",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Stores public, non-PII director profiles keyed by Firebase Auth UID."
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/StudioProject" },
+      "description": "Stores AI Drama Studio projects owned by authenticated directors."
+    }
+  }
+}

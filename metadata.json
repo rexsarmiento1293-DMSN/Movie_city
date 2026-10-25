@@ -1,0 +1,6 @@
+{
+  "name": "Movie City — AI Drama Studio",
+  "description": "Production-grade AI Drama, Cinema Video, Studio Photography, Soundtrack, and Live Direction Workspace powered by Gemini and Firebase.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
